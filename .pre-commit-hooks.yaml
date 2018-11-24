@@ -1,6 +1,6 @@
 -   id: todogcheck
     name: todogcheck
-    entry: todogcheck
+    entry: todo_check.py
     language: python
     files: \.py$
     args: []
