@@ -1,0 +1,6 @@
+-   id: todo_check
+    name: todo_check
+    entry: todo_check
+    language: python
+    files: \.py$
+    args: []
