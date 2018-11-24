@@ -5,7 +5,7 @@ setup(
     version='0.0.0',
     entry_points={
         'console_scripts': [
-            'todo_check = pre_commit.todo_check:main',
+            'todo_check = pre_commit_hook.todo_check:main',
         ],
     },
 )
