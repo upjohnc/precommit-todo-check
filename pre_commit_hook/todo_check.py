@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import re
 import subprocess
 import sys
@@ -30,7 +28,7 @@ def main():
             sys.stdout.write(f'{" " * 4}{i}\n')
         sys.stdout.write('\n\n\033[0m')
         return 1
-    
+
     return 0
 
 
