@@ -1,3 +1,4 @@
+import argparse
 import re
 import subprocess
 import sys
@@ -20,12 +21,15 @@ def check_file(file_name):
         return check_contain_todo(f.read())
 
 
-skip_files = ('nifi/scripts/score_validation.py', 'stream-generator/stream_generator/qpp/submission_logs.py')
-files_to_check = [i for i in terminal_run('git ls-files').splitlines() if i not in skip_files]
-py_files = [i for i in filter(lambda y: re.search('.*\.py$', y), files_to_check)]
+def main(argv=None):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('filenames', nargs='*', help='Filenames to skip')
+    args = parser.parse_args(argv)
 
+    skip_files = args.filenames.split(',')#('nifi/scripts/score_validation.py', 'stream-generator/stream_generator/qpp/submission_logs.py')
+    files_to_check = [i for i in terminal_run('git ls-files').splitlines() if i not in skip_files]
+    py_files = [i for i in filter(lambda y: re.search('.*\.py$', y), files_to_check)]
 
-def main():
     todo_files = tuple(filter(check_file, py_files))
     if todo_files:
         sys.stdout.write("\n\033[91mTodo in Files:\n")
