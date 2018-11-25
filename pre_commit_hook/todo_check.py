@@ -3,7 +3,12 @@ import subprocess
 import sys
 from pathlib import Path
 
-base_dir = Path(__file__).parent.parent.parent.resolve()
+
+def terminal_run(string_):
+    return subprocess.run([string_.split()], stdout=subprocess.PIPE).stdout.decode()
+
+
+base_dir = Path(terminal_run('git rev-parse --show-toplevel').splitlines()[0])
 
 
 def check_contain_todo(text_):
@@ -16,7 +21,7 @@ def check_file(file_name):
 
 
 skip_files = ('nifi/scripts/score_validation.py', 'stream-generator/stream_generator/qpp/submission_logs.py')
-files_to_check = [i.decode() for i in subprocess.run(['git', 'ls-files'], stdout=subprocess.PIPE).stdout.splitlines() if i.decode() not in skip_files]
+files_to_check = [i for i in terminal_run('git ls-files').splitlines() if i not in skip_files]
 py_files = [i for i in filter(lambda y: re.search('.*\.py$', y), files_to_check)]
 
 

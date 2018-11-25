@@ -1,15 +1,12 @@
+from setuptools import find_packages
 from setuptools import setup
 
 setup(
-    name='pre_commit_todo_check',
-    version='0.0.0',
-    classifiers=[
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-    ],
+    packages=find_packages('.', exclude=('tests*', 'testing*')),
     entry_points={
         'console_scripts': [
-            'todo_check = pre_commit_hook.todo_check:main',
+            'python-todo-check = pre_commit_hook.todo_check:main',
         ],
     },
 )
+
