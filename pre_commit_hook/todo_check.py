@@ -27,7 +27,9 @@ def main(argv=None):
     parser.add_argument('--skip', nargs='?')
     args = parser.parse_args(argv)
 
-    skip_files = args.skip#kkk('nifi/scripts/score_validation.py', 'stream-generator/stream_generator/qpp/submission_logs.py')
+    skip_files = ''
+    if args.skip is not None:
+        skip_files = [i.strip() for i in args.skip.split(',')]#kkk('nifi/scripts/score_validation.py', 'stream-generator/stream_generator/qpp/submission_logs.py')
     print(skip_files)
     files_to_check = [i for i in terminal_run('git ls-files').splitlines() if i not in skip_files]
     print(skip_files, files_to_check)
