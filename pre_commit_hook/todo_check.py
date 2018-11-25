@@ -29,6 +29,7 @@ def main(argv=None):
     skip_files = args.filenames#('nifi/scripts/score_validation.py', 'stream-generator/stream_generator/qpp/submission_logs.py')
     files_to_check = [i for i in terminal_run('git ls-files').splitlines() if i not in skip_files]
     print(skip_files, files_to_check)
+    return 1
     py_files = [i for i in filter(lambda y: re.search('.*\.py$', y), files_to_check)]
 
     todo_files = tuple(filter(check_file, py_files))
