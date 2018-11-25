@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 def terminal_run(string_):
-    return subprocess.run([string_.split()], stdout=subprocess.PIPE).stdout.decode()
+    return subprocess.run(string_.split(), stdout=subprocess.PIPE).stdout.decode()
 
 
 base_dir = Path(terminal_run('git rev-parse --show-toplevel').splitlines()[0])
