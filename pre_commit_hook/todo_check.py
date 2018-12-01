@@ -9,7 +9,11 @@ def terminal_run(string_):
     return subprocess.run(string_.split(), stdout=subprocess.PIPE).stdout.decode()
 
 
+# get to repo root dir
 base_dir = Path(terminal_run('git rev-parse --show-toplevel').splitlines()[0])
+present_dir = Path('./')
+
+repo_files = terminal_run(f'git ls-files {base_dir}').splitlines()
 
 
 def check_contain_todo(text_):
@@ -31,7 +35,7 @@ def main(argv=None):
     if args.skip is not None:
         skip_files = [i.strip() for i in args.skip.split(',')]
 
-    files_to_check = [i for i in terminal_run('git ls-files').splitlines() if i not in skip_files]
+    files_to_check = [str((present_dir / i).resolve()) for i in repo_files if i not in skip_files]
     py_files = [i for i in filter(lambda y: re.search('.*\.py$', y), files_to_check)]
 
     todo_files = tuple(filter(check_file, py_files))
