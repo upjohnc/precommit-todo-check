@@ -16,9 +16,14 @@ def check_contain_bad_text(text_):
     return any((contain_pdb, contain_todo))
 
 
+def check_contain_todo(text_):
+    contain_todo = re.search(r'\btodo\b', text_, re.IGNORECASE)
+    return contain_todo
+
+
 def check_file(base_dir, file_name):
     with open(base_dir / file_name, 'r') as f:
-        return check_contain_bad_text(f.read())
+        return check_contain_todo(f.read())
 
 
 def main(argv=None):
