@@ -1,6 +1,6 @@
 # TODO checker for precommit
 
-can add arg `--skip`
+can add arg `--skip`: the root directory will be added to the path given.  And all of the items should be inside the `'`.
 
 ```
   - repo: git://github.com/upjohnc/precommit-todo-check
