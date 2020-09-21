@@ -1,0 +1,41 @@
+repos:
+  - repo: git://github.com/pre-commit/pre-commit-hooks
+    rev: v2.1.0
+    hooks:
+    - id: check-yaml
+      exclude: packer/.kitchen.yml$
+      exclude: \.tf$
+    - id: check-case-conflict
+    - id: check-merge-conflict
+    - id: trailing-whitespace
+    - id: flake8
+      args: [--max-line-length=95]
+    - id: detect-private-key
+      exclude: \_spec.rb$
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v4.3.16
+    hooks:
+    - id: isort
+  - repo: https://github.com/ambv/black
+    rev: 19.3b0
+    hooks:
+    - id: black
+      language_version: python3.7
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.26.0
+    hooks:
+    - id: terraform_fmt
+  - repo: https://github.com/stratasan/hadolint-pre-commit
+    rev: cdefcb096e520a6daa9552b1d4636f5f1e1729cd
+    hooks:
+    - id: hadolint
+  - repo: https://github.com/econchick/interrogate
+    rev: 1.1.4
+    hooks:
+    - id: interrogate
+      args: [-cpyproject.toml, tests] # weird syntax but it is `-c pyproject.toml`
+  - repo: git://github.com/upjohnc/precommit_mccabe_complexity
+    rev: 0.13.0
+    hooks:
+      - id: mccabe-complexity
+        args: ['--base_branch=master']

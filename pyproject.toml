@@ -1,16 +1,32 @@
-[tool.poetry]
-name = "precommit-todo-check"
-version = "0.1.0"
-description = ""
-authors = ["Chad Upjohn <chad.upjohn@stratasan.com>"]
+# Example configuration for Black.
 
-[tool.poetry.dependencies]
-python = "^3.8"
+# NOTE: you have to use single-quoted strings in TOML for regular expressions.
+# It's the equivalent of r-strings in Python.  Multiline strings are treated as
+# verbose regular expressions by Black.  Use [ ] to denote a significant space
+# character.
 
-[tool.poetry.dev-dependencies]
-pytest = "^6.0.2"
-isort = "^5.5.2"
+[tool.black]
+line-length = 88
+target-version = ['py37']
+exclude = '''
+/(
+  # Directories
+    \.eggs
+  | \.git
+  | \.vscode
+  | \.tox
+  | \.venv
+  | \.ropeproject
+  | build
+  | venv
+  | .*egg-info
+)/
+'''
 
-[build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+[tool.interrogate]
+fail-under = 95
+ignore-regex = ["^(?!test_).+"]
+ignore-module = true
+ignore-init-module = true
+quiet = false
+verbose = 1
