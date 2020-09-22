@@ -4,6 +4,7 @@ import subprocess
 import sys
 from functools import partial
 from pathlib import Path
+from typing import List, Tuple
 
 
 def terminal_run(string_):
@@ -11,14 +12,40 @@ def terminal_run(string_):
 
 
 def check_contain_bad_text(text_):
-    contain_todo = re.search(r"\btodo\b", text_, re.IGNORECASE)
-    contain_pdb = re.search(r"\bimport pdb\b", text_, re.IGNORECASE)
-    return any((contain_pdb, contain_todo))
+    def check_todo(line_):
+        return re.search(r"\btodo\b", line_, re.IGNORECASE)
+
+    def check_pdb(line_):
+        return re.search(r"\bimport pdb\b", text_, re.IGNORECASE)
+
+    contain_todo = [
+        line_number + 1
+        for line_number, line in enumerate(text_.splitlines())
+        if check_todo(line)
+    ]
+    contain_pdb = [
+        line_number + 1
+        for line_number, line in enumerate(text_.splitlines())
+        if check_pdb(line)
+    ]
+    return contain_todo + contain_pdb
 
 
 def check_file(base_dir, file_name):
-    with open(base_dir / file_name, "r") as f:
-        return check_contain_bad_text(f.read())
+    file_path = base_dir / file_name
+    with open(file_path, "r") as f:
+        lines_file = (check_contain_bad_text(f.read()), file_path.resolve())
+    return lines_file
+
+
+def set_output(input_stuff: List[Tuple]):
+    beginning = "\n\033[91mTodo in Files:"
+    files_number = [
+        f'\033[36m{" " * 4}{file_path}: line_numbers: {",".join(lines)}'
+        for lines, file_path in input_stuff
+    ]
+    text_to_print = "\n".join([beginning] + files_number)
+    return text_to_print
 
 
 def main(argv=None):
@@ -41,11 +68,10 @@ def main(argv=None):
     py_files = [i for i in filter(lambda y: re.search(r".*\.py$", y), files_to_check)]
 
     check_repo = partial(check_file, base_dir)
-    todo_files = tuple(filter(check_repo, py_files))
+    check_files = [py_files(i) for i in check_repo]
+    todo_files = [i for i in check_files if len(i[0]) > 0]
     if todo_files:
-        sys.stdout.write("\n\033[91mTodo in Files:\n")
-        for i in todo_files:
-            sys.stdout.write(f'{" " * 4}{i}\n')
+        sys.stdout.write(set_output(todo_files))
         sys.stdout.write("\n\n\033[0m")
         return 1
 
