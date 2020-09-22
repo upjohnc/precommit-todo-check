@@ -55,6 +55,7 @@ def main(argv=None):
 
     repo_files = terminal_run(f"git ls-files {base_dir}").splitlines()
     parser = argparse.ArgumentParser()
+    parser.add_argument("filenames", nargs="*", help="Filenames to skip")
     parser.add_argument("--skip", nargs="?")
     args = parser.parse_args(argv)
 
