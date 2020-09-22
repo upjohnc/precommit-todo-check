@@ -41,7 +41,7 @@ def check_file(base_dir, file_name):
 def set_output(input_stuff: List[Tuple]):
     beginning = "\n\033[91mTodo in Files:"
     files_number = [
-        f'\033[36m{" " * 4}{file_path}: line_numbers: {",".join(lines)}'
+        f'\033[36m{" " * 4}{file_path}: line_numbers: {",".join([str(i) for i in lines])}'
         for lines, file_path in input_stuff
     ]
     text_to_print = "\n".join([beginning] + files_number)
