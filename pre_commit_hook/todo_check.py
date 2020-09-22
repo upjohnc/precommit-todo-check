@@ -18,16 +18,21 @@ def check_contain_bad_text(text_):
     def check_pdb(line_):
         return re.search(r"\bimport pdb\b", text_, re.IGNORECASE)
 
-    contain_todo = [
-        line_number + 1
-        for line_number, line in enumerate(text_.splitlines())
-        if check_todo(line)
-    ]
-    contain_pdb = [
-        line_number + 1
-        for line_number, line in enumerate(text_.splitlines())
-        if check_pdb(line)
-    ]
+    contain_todo = []
+    contain_pdb = []
+
+    if any([check_todo(text_), check_pdb(text_)]):
+
+        contain_todo = [
+            line_number + 1
+            for line_number, line in enumerate(text_.splitlines())
+            if check_todo(line)
+        ]
+        contain_pdb = [
+            line_number + 1
+            for line_number, line in enumerate(text_.splitlines())
+            if check_pdb(line)
+        ]
     return contain_todo + contain_pdb
 
 
@@ -71,7 +76,6 @@ def main(argv=None):
     check_repo = partial(check_file, base_dir)
     check_files = [check_repo(i) for i in py_files]
     todo_files = [i for i in check_files if len(i[0]) > 0]
-    print(todo_files)
     if todo_files:
         sys.stdout.write(set_output(todo_files))
         sys.stdout.write("\n\n\033[0m")

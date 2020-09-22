@@ -1,0 +1,3 @@
+[console_scripts]
+python-todo-check = pre_commit_hook.todo_check:main
+
