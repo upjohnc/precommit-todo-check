@@ -71,6 +71,7 @@ def main(argv=None):
     check_repo = partial(check_file, base_dir)
     check_files = [check_repo(i) for i in py_files]
     todo_files = [i for i in check_files if len(i[0]) > 0]
+    print(todo_files)
     if todo_files:
         sys.stdout.write(set_output(todo_files))
         sys.stdout.write("\n\n\033[0m")
