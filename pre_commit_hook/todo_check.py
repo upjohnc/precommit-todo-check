@@ -69,7 +69,7 @@ def main(argv=None):
     py_files = [i for i in filter(lambda y: re.search(r".*\.py$", y), files_to_check)]
 
     check_repo = partial(check_file, base_dir)
-    check_files = [py_files(i) for i in check_repo]
+    check_files = [check_repo(i) for i in py_files]
     todo_files = [i for i in check_files if len(i[0]) > 0]
     if todo_files:
         sys.stdout.write(set_output(todo_files))
