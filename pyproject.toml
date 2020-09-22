@@ -14,6 +14,10 @@ isort = "^5.5.3"
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.poetry.scripts]
+python-todo-check = 'pre_commit_hook.todo_check:main'
+
 #
 # Example configuration for Black.
 
