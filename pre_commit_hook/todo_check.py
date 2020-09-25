@@ -11,9 +11,16 @@ def terminal_run(string_):
     return subprocess.run(string_.split(), stdout=subprocess.PIPE).stdout.decode()
 
 
+def regex_todo(line_):
+    regex_string = r"(^|[^\w]+)to ?do([^\w]+|$)"
+    result = re.search(regex_string, line_, re.IGNORECASE) is not None
+    return result
+
+
 def check_contain_bad_text(text_):
     def check_todo(line_):
-        return re.search(r"\btodo\b", line_, re.IGNORECASE)
+        # return re.search(r"\btodo\b", line_, re.IGNORECASE)
+        return regex_todo(line_)
 
     def check_pdb(line_):
         return re.search(r"\bimport pdb\b", text_, re.IGNORECASE)
