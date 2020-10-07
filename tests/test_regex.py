@@ -19,11 +19,11 @@ good_todo = [
     "#todo",
     "#TOdo",
     "#  todo",
-    "#to do",
+    "#todo",
     "todo ",
-    " to do",
-    " to do ",
-    "to do ",
+    " todo",
+    " todo ",
+    "todo ",
 ]
 bad_todo = ["1todo1", "atodo", "todob", "asto doolo", "asto do", "to doolo"]
 

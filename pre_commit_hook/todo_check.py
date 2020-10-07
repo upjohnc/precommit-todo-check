@@ -12,7 +12,7 @@ def terminal_run(string_):
 
 
 def regex_todo(line_):
-    regex_string = r"(^|[^\w]+)to ?do([^\w]+|$)"
+    regex_string = r"(^|[^\w]+)todo([^\w]+|$)"
     result = re.search(regex_string, line_, re.IGNORECASE) is not None
     return result
 
